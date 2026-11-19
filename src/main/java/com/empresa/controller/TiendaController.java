@@ -54,9 +54,9 @@ public class TiendaController {
 	private final CategoriaService categoriaService;
 	private final ClienteService clienteService;
 	private final PedidoService pedidoService;
-	private TiendaCatalogoService tiendaCatalogoService;
-	private DataCatalogoService dataCatalogoService;
-	private JwtProvider jwtProvider;
+	private final TiendaCatalogoService tiendaCatalogoService;
+	private final DataCatalogoService dataCatalogoService;
+	private final JwtProvider jwtProvider;
 
 	// ============ CATALOGO ============
 
@@ -84,15 +84,15 @@ public class TiendaController {
 	@ResponseBody
 	@GetMapping("/listaProducto/{filtro}")
 	public List<Producto> listaProducto(
-			@PathVariable("filtro") String filtro,
-			@RequestParam(name = "idCategoria", defaultValue = "0", required = false) int idCategoria,
-			@RequestParam(name = "idMarca", defaultValue = "0", required = false) int idMarca,
-			@RequestParam(name = "idEspecie", defaultValue = "0", required = false) int idEspecie,
-			@RequestParam(name = "precioMin", required = false) BigDecimal precioMin,
-			@RequestParam(name = "precioMax", required = false) BigDecimal precioMax,
-			@RequestParam(name = "orden", defaultValue = "recientes", required = false) String orden,
-			@RequestParam(name = "page", defaultValue = "0", required = false) int page,
-			@RequestParam(name = "size", defaultValue = "8", required = false) int size) {
+			@PathVariable String filtro,
+			@RequestParam(defaultValue = "0", required = false) int idCategoria,
+			@RequestParam(defaultValue = "0", required = false) int idMarca,
+			@RequestParam(defaultValue = "0", required = false) int idEspecie,
+			@RequestParam(required = false) BigDecimal precioMin,
+			@RequestParam(required = false) BigDecimal precioMax,
+			@RequestParam(defaultValue = "recientes", required = false) String orden,
+			@RequestParam(defaultValue = "0", required = false) int page,
+			@RequestParam(defaultValue = "8", required = false) int size) {
 
 		Sort sort;
 		switch (orden) {
@@ -119,7 +119,7 @@ public class TiendaController {
 
 	@ResponseBody
 	@GetMapping("/producto/{id}")
-	public Producto buscaProducto(@PathVariable("id") int id) {
+	public Producto buscaProducto(@PathVariable int id) {
 		Optional<Producto> opt = productoService.buscaProducto(id);
 		// Solo productos activos y con presentaciones disponibles
 		if (opt.isPresent() && opt.get().getEstado() == AppSettings.ACTIVO && opt.get().getPrecioDesde() != null) {
@@ -150,14 +150,15 @@ public class TiendaController {
 
 	@ResponseBody
 	@GetMapping("/ubigeo/provincias")
-	public List<String> listaProvincia(@RequestParam("departamento") String departamento) {
+	public List<String> listaProvincia(@RequestParam String departamento) {
 		return tiendaCatalogoService.listaProvincia(departamento);
 	}
 
 	@ResponseBody
 	@GetMapping("/ubigeo/distritos")
-	public List<Ubigeo> listaDistrito(@RequestParam("departamento") String departamento,
-			@RequestParam("provincia") String provincia) {
+	public List<Ubigeo> listaDistrito(
+			@RequestParam String departamento,
+			@RequestParam String provincia) {
 		return tiendaCatalogoService.listaDistrito(departamento, provincia);
 	}
 

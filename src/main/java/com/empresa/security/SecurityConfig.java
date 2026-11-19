@@ -2,7 +2,6 @@ package com.empresa.security;
 
 import java.util.Arrays;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,8 +34,8 @@ public class SecurityConfig {
     private String allowedOrigins;
 
     @Bean
-    JwtTokenFilter jwtTokenFilter(){
-        return new JwtTokenFilter();
+    JwtTokenFilter jwtTokenFilter(JwtProvider jwtProvider){
+        return new JwtTokenFilter(jwtProvider, userDetailsService);
     }
 
     @Bean
@@ -71,7 +70,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http, JwtTokenFilter jwtTokenFilter) throws Exception {
 
     	http
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -89,7 +88,7 @@ public class SecurityConfig {
             // Todo lo demas (CRUD, gestion de pedidos, subir imagenes, utilitarios) es SOLO del personal
             .anyRequest().hasAnyAuthority("Administrador", "Vendedor"));
     	http.authenticationProvider(authenticationProvider());
-    	http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+    	http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
