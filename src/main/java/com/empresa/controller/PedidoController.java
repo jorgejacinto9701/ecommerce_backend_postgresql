@@ -3,7 +3,6 @@ package com.empresa.controller;
 import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,18 +12,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.empresa.entity.Pedido;
 import com.empresa.service.PedidoService;
-import com.empresa.util.AppSettings;
 import com.empresa.util.NegocioException;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * Gestion de pedidos para el ADMINISTRADOR (requiere JWT).
  */
 @RestController
 @RequestMapping("/url/pedido")
+@RequiredArgsConstructor
 public class PedidoController {
 
-	@Autowired
-	private PedidoService pedidoService;
+	private final PedidoService pedidoService;
 
 	@ResponseBody
 	@GetMapping("/listaPedido")
@@ -35,8 +35,8 @@ public class PedidoController {
 	@ResponseBody
 	@PutMapping("/actualizaEstado/{idPedido}/{idEstado}")
 	public HashMap<String, Object> actualizaEstado(
-			@PathVariable("idPedido") int idPedido,
-			@PathVariable("idEstado") int idEstado) {
+			@PathVariable int idPedido,
+			@PathVariable int idEstado) {
 		HashMap<String, Object> mapSalida = new HashMap<String, Object>();
 		try {
 			Pedido objSalida = pedidoService.actualizaEstado(idPedido, idEstado);
@@ -55,7 +55,7 @@ public class PedidoController {
 	/** Confirma el pago pendiente (Yape, Plin, contra entrega) tras verificar el voucher o el cobro. */
 	@ResponseBody
 	@PutMapping("/confirmaPago/{idPedido}")
-	public HashMap<String, Object> confirmaPago(@PathVariable("idPedido") int idPedido) {
+	public HashMap<String, Object> confirmaPago(@PathVariable int idPedido) {
 		HashMap<String, Object> mapSalida = new HashMap<String, Object>();
 		try {
 			Pedido objSalida = pedidoService.confirmaPago(idPedido);

@@ -3,7 +3,6 @@ package com.empresa.controller;
 import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,15 +15,17 @@ import com.empresa.service.CategoriaService;
 import com.empresa.util.AppSettings;
 import com.empresa.util.NegocioException;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * CRUD de categorias para el ADMINISTRADOR (requiere JWT).
  */
 @RestController
 @RequestMapping("/url/categoria")
+@RequiredArgsConstructor
 public class CategoriaController {
 
-	@Autowired
-	private CategoriaService categoriaService;
+	private final CategoriaService categoriaService;
 
 	@ResponseBody
 	@GetMapping("/listaCategoria")

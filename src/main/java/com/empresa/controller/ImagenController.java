@@ -2,9 +2,8 @@ package com.empresa.controller;
 
 import java.util.HashMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.empresa.service.ImagenService;
 import com.empresa.util.NegocioException;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Imagenes de productos en Cloudflare R2 (solo administracion, requiere JWT).
  * - subir    : POST   /url/imagen/subir            (multipart "archivo") -> { idImagen = clave en R2, url }
@@ -22,10 +23,10 @@ import com.empresa.util.NegocioException;
  */
 @RestController
 @RequestMapping("/url/imagen")
+@RequiredArgsConstructor
 public class ImagenController {
 
-	@Autowired
-	private ImagenService imagenService;
+	private final ImagenService imagenService;
 
 	@ResponseBody
 	@PostMapping("/subir")

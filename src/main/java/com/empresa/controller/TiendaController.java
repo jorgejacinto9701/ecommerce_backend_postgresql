@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -40,33 +39,23 @@ import com.empresa.service.TiendaCatalogoService;
 import com.empresa.util.AppSettings;
 import com.empresa.util.NegocioException;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * Endpoints de la tienda. Son PUBLICOS salvo registraPedido y misPedidos,
  * que exigen el JWT del cliente (ver SecurityConfig); el cliente sale del token.
  */
 @RestController
 @RequestMapping("/url/tienda")
+@RequiredArgsConstructor
 public class TiendaController {
 
-	@Autowired
-	private ProductoService productoService;
-
-	@Autowired
-	private CategoriaService categoriaService;
-
-	@Autowired
-	private ClienteService clienteService;
-
-	@Autowired
-	private PedidoService pedidoService;
-
-	@Autowired
+	private final ProductoService productoService;
+	private final CategoriaService categoriaService;
+	private final ClienteService clienteService;
+	private final PedidoService pedidoService;
 	private TiendaCatalogoService tiendaCatalogoService;
-
-	@Autowired
 	private DataCatalogoService dataCatalogoService;
-
-	@Autowired
 	private JwtProvider jwtProvider;
 
 	// ============ CATALOGO ============

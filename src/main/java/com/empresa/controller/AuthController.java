@@ -3,7 +3,6 @@ package com.empresa.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,22 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.empresa.dto.UsuarioLoginDto;
 import com.empresa.security.JwtProvider;
-import com.empresa.security.UsuarioPrincipal;
-import com.empresa.util.AppSettings;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.apachecommons.CommonsLog;
 
 @CommonsLog
 @RestController
 @RequestMapping("/url/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtProvider jwtProvider;
-    
+    private final AuthenticationManager authenticationManager;
+    private final JwtProvider jwtProvider;
     
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UsuarioLoginDto loginUsuario){
@@ -44,7 +39,7 @@ public class AuthController {
         String token = jwtProvider.generateToken(authentication);
         
         //Validaciones en la base de datos
-        UsuarioPrincipal usuario = (UsuarioPrincipal)authentication.getPrincipal();
+        //UsuarioPrincipal usuario = (UsuarioPrincipal)authentication.getPrincipal();
         
 
         Map<String, Object> response = new HashMap<>();

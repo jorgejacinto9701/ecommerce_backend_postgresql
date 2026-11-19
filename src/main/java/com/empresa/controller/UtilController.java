@@ -3,7 +3,6 @@ package com.empresa.controller;
 import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,21 +22,17 @@ import com.empresa.service.UsuarioService;
 import com.empresa.util.AppSettings;
 import com.empresa.util.NegocioException;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/url/util")
+@RequiredArgsConstructor
 public class UtilController {
 
-	@Autowired
-	private DataCatalogoService dataCatalogoService;
-
-	@Autowired
-	private CategoriaService categoriaService;
-
-	@Autowired
-	private UsuarioService usuarioService;
-
-	@Autowired
-	private TiendaCatalogoService tiendaCatalogoService;
+	private final DataCatalogoService dataCatalogoService;
+	private final CategoriaService categoriaService;
+	private final UsuarioService usuarioService;
+	private final TiendaCatalogoService tiendaCatalogoService;
 
 	@GetMapping("/listaCategoria")
 	@ResponseBody
