@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +18,6 @@ import com.empresa.dto.CheckoutDto;
 import com.empresa.dto.ItemCheckoutDto;
 import com.empresa.dto.ResultadoPagoDto;
 import com.empresa.entity.Cliente;
-import com.empresa.entity.DataCatalogo;
 import com.empresa.entity.Pago;
 import com.empresa.entity.Pedido;
 import com.empresa.entity.PedidoHasProducto;
@@ -36,35 +34,22 @@ import com.empresa.repository.UbigeoRepository;
 import com.empresa.util.AppSettings;
 import com.empresa.util.NegocioException;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.apachecommons.CommonsLog;
 
 @Service
 @CommonsLog
+@RequiredArgsConstructor
 public class PedidoServiceImpl implements PedidoService {
 
-	@Autowired
-	private PedidoRepository pedidoRepository;
-
-	@Autowired
-	private PedidoHasProductoRepository detalleRepository;
-
-	@Autowired
-	private PagoRepository pagoRepository;
-
-	@Autowired
-	private ProductoVarianteRepository varianteRepository;
-
-	@Autowired
-	private UbigeoRepository ubigeoRepository;
-
-	@Autowired
-	private ClienteRepository clienteRepository;
-
-	@Autowired
-	private DataCatalogoRepository dataCatalogoRepository;
-
-	@Autowired
-	private PasarelaPagoService pasarelaPagoService;
+	private final PedidoRepository pedidoRepository;
+	private final PedidoHasProductoRepository detalleRepository;
+	private final PagoRepository pagoRepository;
+	private final ProductoVarianteRepository varianteRepository;
+	private final UbigeoRepository ubigeoRepository;
+	private final ClienteRepository clienteRepository;
+	private final DataCatalogoRepository dataCatalogoRepository;
+	private final PasarelaPagoService pasarelaPagoService;
 
 	// Envio gratis desde este monto (0 = desactivado)
 	@Value("${tienda.envio-gratis-desde:0}")

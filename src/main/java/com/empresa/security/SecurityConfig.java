@@ -21,14 +21,14 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import lombok.RequiredArgsConstructor;
+
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-    @Autowired
-    UserDetailsService userDetailsService;
-
-    @Autowired
-    JwtEntryPoint jwtEntryPoint;
+    private final UserDetailsService userDetailsService;
+    private final JwtEntryPoint jwtEntryPoint;
 
     // Origenes permitidos (separados por coma). En produccion: la URL real del frontend.
     @Value("${app.cors.allowed-origins:http://localhost:4200}")

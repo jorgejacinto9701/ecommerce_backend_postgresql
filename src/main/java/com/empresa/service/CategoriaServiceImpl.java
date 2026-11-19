@@ -3,7 +3,6 @@ package com.empresa.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.empresa.entity.Categoria;
@@ -11,11 +10,13 @@ import com.empresa.repository.CategoriaRepository;
 import com.empresa.util.AppSettings;
 import com.empresa.util.NegocioException;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class CategoriaServiceImpl implements CategoriaService {
 
-	@Autowired
-	private CategoriaRepository repository;
+	private final CategoriaRepository repository;
 
 	@Override
 	public List<Categoria> listaActivos() {

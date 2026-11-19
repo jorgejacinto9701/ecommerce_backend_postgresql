@@ -3,7 +3,6 @@ package com.empresa.service;
 import java.util.Date;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +10,14 @@ import com.empresa.entity.Cliente;
 import com.empresa.repository.ClienteRepository;
 import com.empresa.util.AppSettings;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ClienteServiceImpl implements ClienteService {
 
-	@Autowired
-	private ClienteRepository repository;
-
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private final ClienteRepository repository;
+	private final PasswordEncoder passwordEncoder;
 
 	@Override
 	public Cliente registraCliente(Cliente obj) {

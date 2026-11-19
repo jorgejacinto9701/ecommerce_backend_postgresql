@@ -30,7 +30,7 @@ public class ImagenController {
 
 	@ResponseBody
 	@PostMapping("/subir")
-	public HashMap<String, Object> subirImagen(@RequestParam("archivo") MultipartFile archivo) {
+	public HashMap<String, Object> subirImagen(@RequestParam MultipartFile archivo) {
 		HashMap<String, Object> mapSalida = new HashMap<String, Object>();
 		try {
 			if (archivo.isEmpty()) {
@@ -51,7 +51,7 @@ public class ImagenController {
 
 	@ResponseBody
 	@DeleteMapping("/elimina")
-	public HashMap<String, Object> eliminaImagen(@RequestParam("clave") String clave) {
+	public HashMap<String, Object> eliminaImagen(@RequestParam String clave) {
 		HashMap<String, Object> mapSalida = new HashMap<String, Object>();
 		try {
 			imagenService.eliminaImagen(clave);

@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,14 +17,14 @@ import com.empresa.repository.ProductoVarianteRepository;
 import com.empresa.util.AppSettings;
 import com.empresa.util.NegocioException;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ProductoServiceImpl implements ProductoService {
 
-	@Autowired
-	private ProductoRepository repository;
-
-	@Autowired
-	private ProductoVarianteRepository varianteRepository;
+	private final ProductoRepository repository;
+	private final ProductoVarianteRepository varianteRepository;
 
 	@Override
 	public List<Producto> buscaCatalogo(String filtro, int idCategoria, int idMarca, int idEspecie,

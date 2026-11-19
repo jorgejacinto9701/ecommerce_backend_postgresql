@@ -3,7 +3,6 @@ package com.empresa.service;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,20 +17,16 @@ import com.empresa.repository.UbigeoRepository;
 import com.empresa.util.AppSettings;
 import com.empresa.util.NegocioException;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class TiendaCatalogoServiceImpl implements TiendaCatalogoService {
 
-	@Autowired
-	private MarcaRepository marcaRepository;
-
-	@Autowired
-	private EspecieRepository especieRepository;
-
-	@Autowired
-	private UbigeoRepository ubigeoRepository;
-
-	@Autowired
-	private ReclamoRepository reclamoRepository;
+	private final MarcaRepository marcaRepository;
+	private final EspecieRepository especieRepository;
+	private final UbigeoRepository ubigeoRepository;
+	private final ReclamoRepository reclamoRepository;
 
 	@Override
 	public List<Marca> listaMarca() {

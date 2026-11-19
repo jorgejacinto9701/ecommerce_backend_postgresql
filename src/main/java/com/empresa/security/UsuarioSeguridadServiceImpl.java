@@ -3,7 +3,6 @@ package com.empresa.security;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,14 +14,15 @@ import com.empresa.entity.Rol;
 import com.empresa.entity.Usuario;
 import com.empresa.repository.UsuarioRepository;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.apachecommons.CommonsLog;
 
 @Service
 @CommonsLog
+@RequiredArgsConstructor
 public class UsuarioSeguridadServiceImpl implements UserDetailsService {
 
-	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private final UsuarioRepository usuarioRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
